@@ -43,6 +43,27 @@
             <artifactId>h2</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <!--
+        Interface X
+        Class 기반의 프록시를 만들기 위해 CGLIB 써보자.
+        버전 간 호환성이 안좋음.
+        -->
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+            <version>3.3.0</version>
+        </dependency>
+
+        <!--
+        Class 기반 프록시를 만드는 또 다른 방법
+        ByteBuddy 사용
+        ByteBuddy는 스프링에서 버전 관리 해줌
+        -->
+        <dependency>
+            <groupId>net.bytebuddy</groupId>
+            <artifactId>byte-buddy</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
