@@ -14,6 +14,9 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
 import static net.bytebuddy.matcher.ElementMatchers.named;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class BookServiceTest {
 
@@ -111,6 +114,26 @@ class BookServiceTest {
 
         Book book = new Book();
         book.setTitle("spring");
+        bookService.rent(book);
+        bookService.returnBook(book);
+    }
+
+    /**
+     * Mockito 는 Dynamic Proxy 방식으로 구현되어 있다.
+     */
+    @Test
+    void mockitoTest() {
+        // mockito를 이용해서 해당 interface 타입의 가짜 객체를 만들 수 있다.
+        BookRepository bookRepositoryMock = mock(BookRepository.class);
+        Book hibernateBook = new Book();
+        hibernateBook.setTitle("Hibernate");
+        when(bookRepositoryMock.save(any())).thenReturn(hibernateBook);
+
+        DefaultBookService bookService = new DefaultBookService(bookRepositoryMock);
+
+        Book book = new Book();
+        book.setTitle("spring");
+        //위에서 save메소드에 대해 rent 시 Hibernate를 return 하도록 mocking 했음
         bookService.rent(book);
         bookService.returnBook(book);
     }
